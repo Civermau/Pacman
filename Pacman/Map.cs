@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-public class Map
+﻿public class Map
 {   
     readonly string mapPath = "Map.txt";
     static string[]? mapInfo;
@@ -45,32 +42,38 @@ public class Map
                 switch (map[i, j])
                 {
                     case '0':
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        if(Console.ForegroundColor != ConsoleColor.DarkBlue)
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
                         Console.Write("# ");
                         break;
                     case '1':
                         Console.Write("  ");
                         break;
                     case '2':
-                        Console.ForegroundColor = ConsoleColor.White;
+                        if(Console.ForegroundColor != ConsoleColor.White)
+                            Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(". ");
                         break;
                     case '3':
-                        Console.ForegroundColor = ConsoleColor.White;
+                        if (Console.ForegroundColor != ConsoleColor.White)
+                            Console.ForegroundColor = ConsoleColor.White;
                         Console.Write("• ");
                         break;
                     case '4':
-                        Console.ForegroundColor = ConsoleColor.White;
+                        if (Console.ForegroundColor != ConsoleColor.White)
+                            Console.ForegroundColor = ConsoleColor.White;
                         Console.Write("| ");
                         break;
                     case '5':
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        if(Console.ForegroundColor != ConsoleColor.Yellow)
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("0 ");
                         break;
                 }
             }
             //Thread.Sleep(30);
-            Console.ForegroundColor = ConsoleColor.White;
+            if (Console.ForegroundColor != ConsoleColor.White)
+                Console.ForegroundColor = ConsoleColor.White;
             Console.Write(i.ToString());
             Console.WriteLine();
         }
@@ -89,7 +92,10 @@ public class Map
     {
         map[y, x] = value;
     }
-
+    public char ReturnIndex(int x, int y)
+    {
+        return map[y, x];
+    }
     public char characterAtIndex(int x, int y, char character)
     {
         return map[y, x];

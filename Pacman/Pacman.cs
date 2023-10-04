@@ -1,16 +1,12 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-public class Pacman : Character
+﻿public class Pacman : Character
 {
-	public dir queuedDir = new dir();
     /// <summary>
     /// Instantiates pacman at (0, 0)
     /// </summary>
     public Pacman()
 	{
-		x = 0;
-		y = 0;
+        position.x = 0;
+        position.y = 0;
 		isDead = false;
 		direction = dir.Left;
 	}
@@ -21,9 +17,47 @@ public class Pacman : Character
 	/// <param name="Y">Y position</param>
 	public Pacman(int X, int Y)
 	{
-		this.x = X;
-		this.y = Y;
+        position.x = X; 
+        position.y = Y;
 		isDead = false;
 		direction = dir.Left;
+        queuedDir = dir.NoDir;
 	}
+
+    public void TryMoveWithCollisionAndQueuedDir(Map map, char collider)
+    {
+        Position newPosition = position;
+        switch (queuedDir)
+        {
+            case dir.Left:
+                if (map.ReturnIndex(position.x - 1, position.y) != collider)
+                {
+                    newPosition.x--; position = newPosition; direction = queuedDir; queuedDir = dir.NoDir;
+                    return;
+                }
+                break;
+            case dir.Right:
+                if (map.ReturnIndex(position.x + 1, position.y) != collider)
+                {
+                    newPosition.x++; position = newPosition; direction = queuedDir; queuedDir = dir.NoDir;
+                    return;
+                }
+                break;
+            case dir.Up:
+                if (map.ReturnIndex(position.x, position.y - 1) != collider)
+                {
+                    newPosition.y--; position = newPosition; direction = queuedDir; queuedDir = dir.NoDir;
+                    return;
+                }
+                break;
+            case dir.Down:
+                if (map.ReturnIndex(position.x, position.y + 1) != collider)
+                {
+                    newPosition.y++; position = newPosition; direction = queuedDir; queuedDir = dir.NoDir;
+                    return;
+                }
+                break;
+        }
+        MoveWithCollision(map, collider);
+    }
 }
